@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+  },
+  "include": ["02-typescript-native-esm/*.ts"]
+}
