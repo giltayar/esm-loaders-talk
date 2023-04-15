@@ -12,7 +12,7 @@ export async function load(url, context, nextLoad) {
       source
     }
   } else {
-    return await nextLoad(url, context)
+    return await nextLoad(url, {context})
   }
 }
 
