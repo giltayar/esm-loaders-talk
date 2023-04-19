@@ -1,5 +1,5 @@
 export async function load(url, context, nextLoad) {
-  if (url.startsWith('https://')) {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     const response = await fetch(url, {redirect: 'follow'})
 
     if (!response.ok) throw new Error(`module not found ${url}`)
@@ -20,19 +20,35 @@ export async function load(url, context, nextLoad) {
 // this hook intercepts them and converts them into absolute URLs to be
 // passed along to the later hooks below.
 export function resolve(specifier, context, nextResolve) {
-  const { parentURL = null } = context;
+  if (isBareSpecifier(specifier)) {
+    return nextResolve(specifier, context)
+  }
 
-  if (specifier.startsWith('https://')) {
+  const { parentURL = undefined } = context;
+  const url = new URL(specifier, parentURL).href
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
     return {
       shortCircuit: true,
-      url: specifier,
-    };
-  } else if (parentURL && parentURL.startsWith('https://')) {
-    return {
-      shortCircuit: true,
-      url: new URL(specifier, parentURL).href,
+      url,
     };
   }
 
-  return nextResolve(specifier);
+  return nextResolve(specifier, context);
+}
+
+function isBareSpecifier(specifier) {
+  if (specifier.startsWith('.')) {
+    return false
+  }
+
+  // is it an absolute url?
+  try {
+    new URL(specifier)
+  } catch (_) {
+    // it's not an absolute url!
+    return true
+  }
+
+  return false
 }

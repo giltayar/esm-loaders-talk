@@ -13,15 +13,19 @@ export async function load(url, context, nextLoad) {
   return await nextLoad(url, context)
 }
 
-export async function resolve(specifier, context, nextResolve) {
-  if (!isBareSpecifier(specifier) && specifier.endsWith('.ts')) {
+export function resolve(specifier, context, nextResolve) {
+  if (isBareSpecifier) {
+    return nextResolve(specifier, context)
+  }
+
+  if (specifier.endsWith('.ts')) {
     return {
       url: new URL(specifier, context.parentURL ?? cwdUrl).href,
       shortCircuit: true
     }
   }
 
-  return await nextResolve(specifier, context)
+  return nextResolve(specifier, context)
 }
 
 const cwdUrl = pathToFileURL(process.cwd())
