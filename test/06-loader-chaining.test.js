@@ -32,8 +32,8 @@ describe('06-loader-chaining', ([c]) => {
     assert.deepEqual(
       await runInNode(
         'main.js',
-        '../05-loader-reading-http/loader.js',
-        '../04-loader-transforming-ts/loader.js',
+        '../04-loader-reading-http/loader.js',
+        '../05-loader-transforming-ts/loader.js',
         '../03-loader-resolving-overrides/loader.js'
       ),
       ['4 2']
@@ -46,8 +46,8 @@ describe('06-loader-chaining', ([c]) => {
         runInNode(
           'main.js',
           '../03-loader-resolving-overrides/loader.js',
-          '../05-loader-reading-http/loader.js',
-          '../04-loader-transforming-ts/loader.js'
+          '../04-loader-reading-http/loader.js',
+          '../05-loader-transforming-ts/loader.js'
         ),
       /ERR_UNSUPPORTED_ESM_URL_SCHEME.*http/
     )
@@ -58,8 +58,8 @@ describe('06-loader-chaining', ([c]) => {
       () =>
         runInNode(
           'main.js',
-          '../04-loader-transforming-ts/loader.js',
-          '../05-loader-reading-http/loader.js',
+          '../05-loader-transforming-ts/loader.js',
+          '../04-loader-reading-http/loader.js',
           '../03-loader-resolving-overrides/loader.js'
         ),
       /SyntaxError.*Missing initializer/
