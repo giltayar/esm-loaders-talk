@@ -6,7 +6,7 @@ export async function runInNode(file, ...loaders) {
       all: true,
       nodeOptions: [
         '--no-warnings',
-        ...(loaders ? loaders.map(l => `--loader=./${l}`) : []),
+        ...(loaders ? loaders.map((l) => `--loader=./${l}`) : []),
       ],
     })
   ).all.split('\n')

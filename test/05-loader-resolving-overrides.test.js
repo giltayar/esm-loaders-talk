@@ -9,3 +9,10 @@ it('should override modules', async () => {
     'module overriden!',
   ])
 })
+
+it('should not override if no loader', async () => {
+  await assert.rejects(
+    () => runInNode('main.js'),
+    /ERR_MODULE_NOT_FOUND.*a-module-to-override/
+  )
+})

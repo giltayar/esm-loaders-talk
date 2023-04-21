@@ -44,4 +44,30 @@ describe('06-loader-chaining', () => {
       ['4 2']
     )
   })
+
+  it('should fail loading if overrides loader is first', async () => {
+    await assert.rejects(
+      () =>
+        runInNode(
+          'main.js',
+          '../05-loader-resolving-overrides/loader.js',
+          '../03-loader-reading-http/loader.js',
+          '../04-loader-transforming-ts/loader.js'
+        ),
+      /ERR_UNSUPPORTED_ESM_URL_SCHEME.*http/
+    )
+  })
+
+  it('should fail loading if ts loader is before http', async () => {
+    await assert.rejects(
+      () =>
+        runInNode(
+          'main.js',
+          '../04-loader-transforming-ts/loader.js',
+          '../03-loader-reading-http/loader.js',
+          '../05-loader-resolving-overrides/loader.js'
+        ),
+      /SyntaxError.*Missing initializer/
+    )
+  })
 })

@@ -12,7 +12,5 @@ it('should clear the cache when the loader runs', async () => {
 })
 
 it('should *not* clear the cache when the loader does not runs', async () => {
-  assert.deepEqual(await runInNode('main.js'), [
-    'module "module.js" loaded',
-  ])
+  assert.deepEqual(await runInNode('main.js'), ['module "module.js" loaded'])
 })

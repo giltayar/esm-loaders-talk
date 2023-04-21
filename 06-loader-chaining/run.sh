@@ -14,8 +14,8 @@ node \
 
 
 # This doesn't work, because the http loader needs to be before the ts one ""
-# node \
-#   --loader ../04-loader-transforming-ts/loader.js \
-#   --loader ../03-loader-reading-http/loader.js \
-#   --loader ../05-loader-resolving-overrides/loader.js \
-#   ./main.js
+node \
+  --loader ../04-loader-transforming-ts/loader.js \
+  --loader ../03-loader-reading-http/loader.js \
+  --loader ../05-loader-resolving-overrides/loader.js \
+  ./main.js
