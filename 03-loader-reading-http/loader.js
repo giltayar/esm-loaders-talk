@@ -1,3 +1,5 @@
+import {isBareSpecifier} from '../commons/is-bare-specifier.js'
+
 export async function load(url, context, nextLoad) {
   if (url.startsWith('http://') || url.startsWith('https://')) {
     const response = await fetch(url, {redirect: 'follow'})
@@ -9,7 +11,7 @@ export async function load(url, context, nextLoad) {
     return {
       shortCircuit: true,
       format: 'module',
-      source
+      source,
     }
   } else {
     return await nextLoad(url, {context})
@@ -24,31 +26,15 @@ export function resolve(specifier, context, nextResolve) {
     return nextResolve(specifier, context)
   }
 
-  const { parentURL = undefined } = context;
+  const {parentURL = undefined} = context
   const url = new URL(specifier, parentURL).href
 
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return {
       shortCircuit: true,
       url,
-    };
+    }
   }
 
-  return nextResolve(specifier, context);
-}
-
-function isBareSpecifier(specifier) {
-  if (specifier.startsWith('.')) {
-    return false
-  }
-
-  // is it an absolute url?
-  try {
-    new URL(specifier)
-  } catch (_) {
-    // it's not an absolute url!
-    return true
-  }
-
-  return false
+  return nextResolve(specifier, context)
 }

@@ -1,5 +1,6 @@
 import {pathToFileURL} from 'node:url'
 import {transform} from 'esbuild'
+import {isBareSpecifier} from '../commons/is-bare-specifier.js'
 
 export async function load(url, context, nextLoad) {
   if (url.endsWith('.ts')) {
@@ -21,7 +22,7 @@ export function resolve(specifier, context, nextResolve) {
   if (specifier.endsWith('.ts')) {
     return {
       url: new URL(specifier, context.parentURL ?? cwdUrl).href,
-      shortCircuit: true
+      shortCircuit: true,
     }
   }
 
@@ -29,19 +30,3 @@ export function resolve(specifier, context, nextResolve) {
 }
 
 const cwdUrl = pathToFileURL(process.cwd())
-
-function isBareSpecifier(specifier) {
-  if (specifier.startsWith('.')) {
-    return false
-  }
-
-  // is it an absolute url?
-  try {
-    new URL(specifier)
-  } catch (_) {
-    // it's not!
-    return true
-  }
-
-  return true
-}
