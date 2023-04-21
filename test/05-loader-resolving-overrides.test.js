@@ -2,7 +2,7 @@ import {it, describe, before} from 'node:test'
 import assert from 'node:assert/strict'
 import {runInNode} from './run-in-node.js'
 
-describe('05-loader-resolving-overrides', ([c]) => {
+describe('03-loader-resolving-overrides', ([c]) => {
   before(() => process.chdir(c.name))
 
   it('should override modules', async () => {
