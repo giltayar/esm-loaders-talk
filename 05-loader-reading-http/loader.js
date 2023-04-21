@@ -18,23 +18,19 @@ export async function load(url, context, nextLoad) {
   }
 }
 
-// Normally Node.js would error on specifiers starting with 'https://', so
-// this hook intercepts them and converts them into absolute URLs to be
-// passed along to the later hooks below.
-export function resolve(specifier, context, nextResolve) {
+export async function resolve(specifier, context, nextResolve) {
   if (isBareSpecifier(specifier)) {
-    return nextResolve(specifier, context)
+    return await nextResolve(specifier, context)
   }
 
-  const {parentURL = undefined} = context
-  const url = new URL(specifier, parentURL).href
+  const url = new URL(specifier, context.parentURL).href
 
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return {
-      shortCircuit: true,
       url,
+      shortCircuit: true,
     }
   }
 
-  return nextResolve(specifier, context)
+  return await nextResolve(specifier, context)
 }

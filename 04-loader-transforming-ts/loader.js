@@ -1,4 +1,3 @@
-import {pathToFileURL} from 'node:url'
 import {transform} from 'esbuild'
 import {isBareSpecifier} from '../commons/is-bare-specifier.js'
 
@@ -14,19 +13,17 @@ export async function load(url, context, nextLoad) {
   return await nextLoad(url, context)
 }
 
-export function resolve(specifier, context, nextResolve) {
+export async function resolve(specifier, context, nextResolve) {
   if (isBareSpecifier) {
-    return nextResolve(specifier, context)
+    return await nextResolve(specifier, context)
   }
 
   if (specifier.endsWith('.ts')) {
     return {
-      url: new URL(specifier, context.parentURL ?? cwdUrl).href,
+      url: new URL(specifier, context.parentURL).href,
       shortCircuit: true,
     }
   }
 
-  return nextResolve(specifier, context)
+  return await nextResolve(specifier, context)
 }
-
-const cwdUrl = pathToFileURL(process.cwd())
