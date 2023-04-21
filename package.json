@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "esbuild --outdir=02-typescript-native-esm 02-typescript-native-esm/*.ts",
     "test": "concurrently 'npm:test:*'",
     "test:node": "node --test test/*.test.js",
     "test:prettier": "prettier **/*.js --write",
@@ -25,16 +25,14 @@
   "devDependencies": {
     "@types/node": "^18.15.13",
     "concurrently": "^8.0.1",
+    "esbuild": "^0.17.17",
     "eslint": "^8.38.0",
     "execa": "^7.1.1",
     "p-retry": "^5.1.2",
     "prettier": "^2.8.7",
-    "serve": "^14.2.0",
-    "typescript": "^5.0.4"
+    "serve": "^14.2.0"
   },
   "dependencies": {
-    "cowsay": "^1.5.0",
-    "esbuild": "^0.17.17",
     "right-pad": "^1.0.1"
   }
 }
