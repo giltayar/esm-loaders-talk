@@ -4,19 +4,14 @@ import {runInNode} from './run-in-node.js'
 import {execa} from 'execa'
 import retry from 'p-retry'
 
-process.chdir('06-loader-chaining')
+describe('06-loader-chaining', ([c]) => {
+  before(() => process.chdir(c.name))
 
-describe('06-loader-chaining', () => {
   const killServeProcess = new AbortController()
-
   before(async () => {
-    try {
-      execa('../node_modules/.bin/serve', ['-l', '3000', '.'], {
-        signal: killServeProcess.signal,
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    execa('../node_modules/.bin/serve', ['-l', '3000', '.'], {
+      signal: killServeProcess.signal,
+    })
 
     await retry(() => fetch('http://localhost:3000'))
   })

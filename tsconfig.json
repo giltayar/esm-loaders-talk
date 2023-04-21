@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "module": "nodenext",
-    "checkJs": true,
-    "allowImportingTsExtensions": true
+    "checkJs": true
   },
   "include": ["02-typescript-native-esm/*.ts"]
 }

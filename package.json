@@ -8,7 +8,8 @@
     "build": "tsc",
     "test": "concurrently 'npm:test:*'",
     "test:node": "node --test test/*.test.js",
-    "test:prettier": "prettier **/*.js --write"
+    "test:prettier": "prettier **/*.js --write",
+    "test:eslint": "eslint --max-warnings=0 ."
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@types/node": "^18.15.13",
     "concurrently": "^8.0.1",
+    "eslint": "^8.38.0",
     "execa": "^7.1.1",
     "p-retry": "^5.1.2",
     "prettier": "^2.8.7",
