@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "test": "prettier **/*.js --write"
+    "test": "concurrently 'npm:test:*'",
+    "test:node": "node --test test/*.test.js",
+    "test:prettier": "prettier **/*.js --write"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,9 @@
   },
   "homepage": "https://github.com/giltayar/esm-loaders-talk#readme",
   "devDependencies": {
+    "@types/node": "^18.15.13",
+    "concurrently": "^8.0.1",
+    "execa": "^7.1.1",
     "prettier": "^2.8.7",
     "typescript": "^5.0.4"
   },
