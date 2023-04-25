@@ -3,9 +3,6 @@ import {isBareSpecifier} from '../commons/is-bare-specifier.js'
 export async function load(url, context, nextLoad) {
   if (url.startsWith('http://') || url.startsWith('https://')) {
     const response = await fetch(url, {redirect: 'follow'})
-
-    if (!response.ok) throw new Error(`module not found ${url}`)
-
     const source = await response.text()
 
     return {
@@ -14,7 +11,7 @@ export async function load(url, context, nextLoad) {
       source,
     }
   } else {
-    return await nextLoad(url, {context})
+    return await nextLoad(url, context)
   }
 }
 

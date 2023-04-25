@@ -7,7 +7,7 @@ describe('03-loader-resolving-overrides', ([c]) => {
 
   it('should override modules', async () => {
     assert.deepEqual(await runInNode('main.js', 'loader.js'), [
-      'module overriden!',
+      'module overridden!',
     ])
   })
 
