@@ -23,10 +23,7 @@ export async function resolve(specifier, context, nextResolve) {
   const url = new URL(specifier, context.parentURL).href
 
   if (url.startsWith('http://') || url.startsWith('https://')) {
-    return {
-      url,
-      shortCircuit: true,
-    }
+    return {url, shortCircuit: true}
   }
 
   return await nextResolve(specifier, context)

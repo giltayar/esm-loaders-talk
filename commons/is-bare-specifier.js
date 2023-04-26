@@ -6,7 +6,7 @@ export function isBareSpecifier(specifier) {
   // is it an absolute url?
   try {
     new URL(specifier)
-  } catch (_) {
+  } catch {
     // it's not!
     return true
   }
