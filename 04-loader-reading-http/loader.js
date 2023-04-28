@@ -1,5 +1,3 @@
-import {isBareSpecifier} from '../commons/is-bare-specifier.js'
-
 export async function load(url, context, nextLoad) {
   if (url.startsWith('http://') || url.startsWith('https://')) {
     const response = await fetch(url, {redirect: 'follow'})
@@ -27,4 +25,20 @@ export async function resolve(specifier, context, nextResolve) {
   }
 
   return await nextResolve(specifier, context)
+}
+
+function isBareSpecifier(specifier) {
+  if (specifier.startsWith('.')) {
+    return false
+  }
+
+  // is it an absolute url?
+  try {
+    new URL(specifier)
+  } catch {
+    // it's not!
+    return true
+  }
+
+  return false
 }
