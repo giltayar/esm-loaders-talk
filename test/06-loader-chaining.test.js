@@ -28,41 +28,69 @@ describe('06-loader-chaining', ([c]) => {
     ).catch(() => 1)
   })
 
-  it('should chain modules together', async () => {
-    assert.deepEqual(
-      await runInNode(
-        'main.js',
-        '../04-loader-reading-http/loader.js',
-        '../05-loader-transforming-ts/loader.js',
-        '../03-loader-resolving-overrides/loader.js'
-      ),
-      ['4 2']
-    )
-  })
-
-  it('should fail loading if overrides loader is first', async () => {
-    await assert.rejects(
-      () =>
-        runInNode(
+  describe('two loaders', () => {
+    it('should chain 2 modules together', async () => {
+      assert.deepEqual(
+        await runInNode(
           'main.js',
-          '../03-loader-resolving-overrides/loader.js',
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js'
         ),
-      /ERR_UNSUPPORTED_ESM_URL_SCHEME.*http/
-    )
+        ['4 2']
+      )
+    })
+
+    it('should fail loading if ts loader is before http', async () => {
+      await assert.rejects(
+        () =>
+          runInNode(
+            'main.js',
+            '../05-loader-transforming-ts/loader.js',
+            '../04-loader-reading-http/loader.js',
+          ),
+        /SyntaxError.*Missing initializer/
+      )
+    })
   })
 
-  it('should fail loading if ts loader is before http', async () => {
-    await assert.rejects(
-      () =>
-        runInNode(
-          'main.js',
-          '../05-loader-transforming-ts/loader.js',
+  describe('three loaders', () => {
+    it('should chain 3 modules together', async () => {
+      assert.deepEqual(
+        await runInNode(
+          'main2.js',
           '../04-loader-reading-http/loader.js',
+          '../05-loader-transforming-ts/loader.js',
           '../03-loader-resolving-overrides/loader.js'
         ),
-      /SyntaxError.*Missing initializer/
-    )
+        ['4 2']
+      )
+    })
+
+    it('should fail loading if overrides loader is first', async () => {
+      await assert.rejects(
+        () =>
+          runInNode(
+            'main2.js',
+            '../03-loader-resolving-overrides/loader.js',
+            '../04-loader-reading-http/loader.js',
+            '../05-loader-transforming-ts/loader.js'
+          ),
+        /ERR_UNSUPPORTED_ESM_URL_SCHEME.*http/
+      )
+    })
+
+    it('should fail loading if ts loader is before http', async () => {
+      await assert.rejects(
+        () =>
+          runInNode(
+            'main2.js',
+            '../05-loader-transforming-ts/loader.js',
+            '../04-loader-reading-http/loader.js',
+            '../03-loader-resolving-overrides/loader.js'
+          ),
+        /SyntaxError.*Missing initializer/
+      )
+    })
   })
+
 })

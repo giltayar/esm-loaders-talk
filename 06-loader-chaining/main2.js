@@ -1,5 +1,5 @@
-import {a} from 'http://localhost:3000/a.js'
-import {b} from 'http://localhost:3000/b.ts'
+import {a} from 'a'
+import {b} from 'b'
 
 console.log(a, b)
 
