@@ -36,7 +36,7 @@ describe('06-loader-chaining', ([c]) => {
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js'
         ),
-        ['4 2']
+        ['42']
       )
     })
 
@@ -46,7 +46,7 @@ describe('06-loader-chaining', ([c]) => {
           runInNode(
             'main.js',
             '../05-loader-transforming-ts/loader.js',
-            '../04-loader-reading-http/loader.js',
+            '../04-loader-reading-http/loader.js'
           ),
         /SyntaxError.*Missing initializer/
       )
@@ -62,7 +62,7 @@ describe('06-loader-chaining', ([c]) => {
           '../05-loader-transforming-ts/loader.js',
           '../03-loader-resolving-overrides/loader.js'
         ),
-        ['4 2']
+        ['42']
       )
     })
 
@@ -92,5 +92,4 @@ describe('06-loader-chaining', ([c]) => {
       )
     })
   })
-
 })
