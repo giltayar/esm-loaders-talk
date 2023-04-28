@@ -1,9 +1,9 @@
 export async function resolve(specifier, context, nextResolve) {
-  if (specifier.startsWith('node:')) {
+  const {url, ...rest} = await nextResolve(specifier, context)
+
+  if (url.startsWith('node:')) {
     return await nextResolve(specifier, context)
   }
-
-  const {url, ...rest} = await nextResolve(specifier, context)
 
   const newUrl = addQueryToUrl(url, '__generation', globalThis.__generation)
 
