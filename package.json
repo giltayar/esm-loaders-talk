@@ -4,6 +4,9 @@
   "description": "Companion code to the talk.",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "scripts": {
     "build": "esbuild --outdir=02-typescript-native-esm 02-typescript-native-esm/*.ts",
     "test": "concurrently 'npm:test:*'",

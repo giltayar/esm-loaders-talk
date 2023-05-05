@@ -4,7 +4,7 @@ import {runInNode} from './run-in-node.js'
 
 const hasOffThreadWorkers = !process.version.startsWith('v18.')
 
-describe('07-clear-cache', {skip: hasOffThreadWorkers}, ([c]) => {
+describe('07-clear-cache/off-thread', {skip: !hasOffThreadWorkers}, ([c]) => {
   before(() => process.chdir(c.name))
 
   it('should clear the cache when the loader runs', async () => {
