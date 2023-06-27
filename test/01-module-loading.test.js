@@ -1,8 +1,11 @@
 import {before, describe, it} from 'node:test'
+import util from 'node:util'
 import assert from 'node:assert/strict'
 import {runInNode} from './run-in-node.js'
 
-describe('01-module-loading', ([c]) => {
+util.inspect.defaultOptions.colors = false
+
+describe('01-module-loading', (c) => {
   before(() => process.chdir(c.name))
 
   it('should load modules', async () => {

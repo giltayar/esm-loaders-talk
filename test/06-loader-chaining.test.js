@@ -4,7 +4,7 @@ import {runInNode} from './run-in-node.js'
 import {execa} from 'execa'
 import retry from 'p-retry'
 
-describe('06-loader-chaining', ([c]) => {
+describe('06-loader-chaining', (c) => {
   before(() => process.chdir(c.name))
 
   const killServeProcess = new AbortController()
@@ -66,16 +66,15 @@ describe('06-loader-chaining', ([c]) => {
       )
     })
 
-    it('should fail loading if overrides loader is first', async () => {
-      await assert.rejects(
-        () =>
-          runInNode(
-            'main2.js',
-            '../03-loader-resolving-overrides/loader.js',
-            '../04-loader-reading-http/loader.js',
-            '../05-loader-transforming-ts/loader.js'
-          ),
-        /ERR_UNSUPPORTED_ESM_URL_SCHEME.*http/
+    it('should pass if the order is this', async () => {
+      assert.deepEqual(
+        await runInNode(
+          'main2.js',
+          '../03-loader-resolving-overrides/loader.js',
+          '../04-loader-reading-http/loader.js',
+          '../05-loader-transforming-ts/loader.js',
+        ),
+        ['42']
       )
     })
 

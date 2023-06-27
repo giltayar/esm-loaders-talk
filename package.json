@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=20.3.0"
   },
   "scripts": {
     "build": "esbuild --outdir=02-typescript-native-esm 02-typescript-native-esm/*.ts",
@@ -26,13 +26,13 @@
   },
   "homepage": "https://github.com/giltayar/esm-loaders-talk#readme",
   "devDependencies": {
-    "@types/node": "^18.15.13",
-    "concurrently": "^8.0.1",
-    "esbuild": "^0.17.17",
-    "eslint": "^8.38.0",
+    "@types/node": "^20.3.2",
+    "concurrently": "^8.2.0",
+    "esbuild": "^0.18.10",
+    "eslint": "^8.43.0",
     "execa": "^7.1.1",
     "p-retry": "^5.1.2",
-    "prettier": "^2.8.7",
+    "prettier": "^2.8.8",
     "serve": "^14.2.0"
   },
   "dependencies": {

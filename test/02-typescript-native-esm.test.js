@@ -2,7 +2,7 @@ import {it, before, describe} from 'node:test'
 import assert from 'node:assert/strict'
 import {runInNode} from './run-in-node.js'
 
-describe('02-typescript-native-esm', ([c]) => {
+describe('02-typescript-native-esm', (c) => {
   before(() => process.chdir(c.name))
 
   it('should export ts files as native esm', async () => {
