@@ -1,3 +1,5 @@
+import module from 'node:module'
+
 export async function resolve(specifier, context, nextResolve) {
   const {url, ...rest} = await nextResolve(specifier, context)
 
@@ -18,4 +20,8 @@ function addQueryToUrl(url, name, value) {
   u.searchParams.set(name, value)
 
   return u.href
+}
+
+if (module.register) {
+  module.register(import.meta.url)
 }

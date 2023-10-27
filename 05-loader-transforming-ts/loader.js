@@ -1,4 +1,5 @@
 import {transform} from 'esbuild'
+import module from 'node:module'
 
 export async function load(url, context, nextLoad) {
   if (url.endsWith('.ts')) {
@@ -10,4 +11,8 @@ export async function load(url, context, nextLoad) {
   }
 
   return await nextLoad(url, context)
+}
+
+if (module.register) {
+  module.register(import.meta.url)
 }

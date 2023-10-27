@@ -1,4 +1,7 @@
+import module from 'node:module'
+
 let generation = 0
+let portToLoader = undefined
 
 export function clearCache() {
   generation++
@@ -7,11 +10,20 @@ export function clearCache() {
 }
 
 function sendGenerationToLoader(generation) {
-  if (!globalThis.__ccLoaderPort) return
-
   const msgAck = new Int32Array(new SharedArrayBuffer(4))
 
-  globalThis.__ccLoaderPort.postMessage({generation, msgAck})
+  portToLoader.postMessage({generation, msgAck})
 
   Atomics.wait(msgAck, 0, 0)
+}
+
+if (module.register) {
+  const {port1, port2} = new MessageChannel()
+
+  portToLoader = port1
+
+  module.register(new URL('loader.js', import.meta.url), {
+    data: {port: port2},
+    transferList: [port2],
+  })
 }

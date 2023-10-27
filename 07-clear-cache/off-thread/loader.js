@@ -12,8 +12,8 @@ export async function resolve(specifier, context, nextResolve) {
   return {url: newUrl, ...rest}
 }
 
-export function globalPreload(context) {
-  context.port.onmessage = ({data}) => {
+export function initialize({port}) {
+  port.onmessage = ({data}) => {
     const {generation: generation_, msgAck} = data
 
     generation = generation_
@@ -21,8 +21,6 @@ export function globalPreload(context) {
     Atomics.store(msgAck, 0, 1)
     Atomics.notify(msgAck, 0)
   }
-
-  return `globalThis.__ccLoaderPort = port`
 }
 
 function addQueryToUrl(url, name, value) {

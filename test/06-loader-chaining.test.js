@@ -1,6 +1,6 @@
 import {it, before, after, describe} from 'node:test'
 import assert from 'node:assert/strict'
-import {runInNode} from './run-in-node.js'
+import {runInNodeLoader, runInNodeImport} from './run-in-node.js'
 import {execa} from 'execa'
 import retry from 'p-retry'
 
@@ -31,32 +31,53 @@ describe('06-loader-chaining', (c) => {
   describe('two loaders', () => {
     it('should chain 2 modules together', async () => {
       assert.deepEqual(
-        await runInNode(
+        await runInNodeLoader(
           'main.js',
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js',
         ),
         ['42'],
       )
+
+      runInNodeImport.supports &&
+        assert.deepEqual(
+          await runInNodeImport(
+            'main.js',
+            '../04-loader-reading-http/loader.js',
+            '../05-loader-transforming-ts/loader.js',
+          ),
+          ['42'],
+        )
     })
 
     it('should fail loading if ts loader is before http', async () => {
       await assert.rejects(
         () =>
-          runInNode(
+          runInNodeLoader(
             'main.js',
             '../05-loader-transforming-ts/loader.js',
             '../04-loader-reading-http/loader.js',
           ),
         /SyntaxError.*Missing initializer/,
       )
+
+      // Fails because of bug https://github.com/nodejs/node/issues/50427
+      // await assert.rejects(
+      //   () =>
+      //     runInNodeLoader(
+      //       'main.js',
+      //       '../05-loader-transforming-ts/loader.js',
+      //       '../04-loader-reading-http/loader.js',
+      //     ),
+      //   /SyntaxError.*Missing initializer/,
+      // )
     })
   })
 
   describe('three loaders', () => {
     it('should chain 3 modules together', async () => {
       assert.deepEqual(
-        await runInNode(
+        await runInNodeLoader(
           'main2.js',
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js',
@@ -64,11 +85,22 @@ describe('06-loader-chaining', (c) => {
         ),
         ['42'],
       )
+
+      runInNodeImport.supports &&
+        assert.deepEqual(
+          await runInNodeImport(
+            'main2.js',
+            '../04-loader-reading-http/loader.js',
+            '../05-loader-transforming-ts/loader.js',
+            '../03-loader-resolving-overrides/loader.js',
+          ),
+          ['42'],
+        )
     })
 
     it('should pass if the order is this', async () => {
       assert.deepEqual(
-        await runInNode(
+        await runInNodeLoader(
           'main2.js',
           '../03-loader-resolving-overrides/loader.js',
           '../04-loader-reading-http/loader.js',
@@ -76,12 +108,23 @@ describe('06-loader-chaining', (c) => {
         ),
         ['42'],
       )
+
+      runInNodeImport.supports &&
+        assert.deepEqual(
+          await runInNodeImport(
+            'main2.js',
+            '../03-loader-resolving-overrides/loader.js',
+            '../04-loader-reading-http/loader.js',
+            '../05-loader-transforming-ts/loader.js',
+          ),
+          ['42'],
+        )
     })
 
     it('should fail loading if ts loader is before http', async () => {
       await assert.rejects(
         () =>
-          runInNode(
+          runInNodeLoader(
             'main2.js',
             '../05-loader-transforming-ts/loader.js',
             '../04-loader-reading-http/loader.js',
@@ -89,6 +132,18 @@ describe('06-loader-chaining', (c) => {
           ),
         /SyntaxError.*Missing initializer/,
       )
+
+      // Fails because of bug https://github.com/nodejs/node/issues/50427
+      // await assert.rejects(
+      //   () =>
+      //     runInNodeLoader(
+      //       'main2.js',
+      //       '../05-loader-transforming-ts/loader.js',
+      //       '../04-loader-reading-http/loader.js',
+      //       '../03-loader-resolving-overrides/loader.js',
+      //     ),
+      //   /SyntaxError.*Missing initializer/,
+      // )
     })
   })
 })
