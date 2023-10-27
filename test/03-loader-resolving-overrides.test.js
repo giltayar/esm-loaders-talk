@@ -14,7 +14,7 @@ describe('03-loader-resolving-overrides', (c) => {
   it('should not override if no loader', async () => {
     await assert.rejects(
       () => runInNode('main.js'),
-      /ERR_MODULE_NOT_FOUND.*a-module-to-override/
+      /ERR_MODULE_NOT_FOUND.*a-module-to-override/,
     )
   })
 })

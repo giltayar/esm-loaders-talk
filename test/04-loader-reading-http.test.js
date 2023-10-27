@@ -12,7 +12,7 @@ describe('04-loader-reading-http', (c) => {
   it('should not load modules via http if no loader', async () => {
     await assert.rejects(
       () => runInNode('main.js'),
-      /ERR_UNSUPPORTED_ESM_URL_SCHEME/
+      /ERR_UNSUPPORTED_ESM_URL_SCHEME/,
     )
   })
 })

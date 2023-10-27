@@ -24,7 +24,7 @@ describe('06-loader-chaining', (c) => {
         fetch('http://localhost:3000')
           .catch((_) => 1)
           .then((_) => Promise.reject(new Error())),
-      {minTimeout: 200, maxTimeout: 200}
+      {minTimeout: 200, maxTimeout: 200},
     ).catch(() => 1)
   })
 
@@ -34,9 +34,9 @@ describe('06-loader-chaining', (c) => {
         await runInNode(
           'main.js',
           '../04-loader-reading-http/loader.js',
-          '../05-loader-transforming-ts/loader.js'
+          '../05-loader-transforming-ts/loader.js',
         ),
-        ['42']
+        ['42'],
       )
     })
 
@@ -46,9 +46,9 @@ describe('06-loader-chaining', (c) => {
           runInNode(
             'main.js',
             '../05-loader-transforming-ts/loader.js',
-            '../04-loader-reading-http/loader.js'
+            '../04-loader-reading-http/loader.js',
           ),
-        /SyntaxError.*Missing initializer/
+        /SyntaxError.*Missing initializer/,
       )
     })
   })
@@ -60,9 +60,9 @@ describe('06-loader-chaining', (c) => {
           'main2.js',
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js',
-          '../03-loader-resolving-overrides/loader.js'
+          '../03-loader-resolving-overrides/loader.js',
         ),
-        ['42']
+        ['42'],
       )
     })
 
@@ -74,7 +74,7 @@ describe('06-loader-chaining', (c) => {
           '../04-loader-reading-http/loader.js',
           '../05-loader-transforming-ts/loader.js',
         ),
-        ['42']
+        ['42'],
       )
     })
 
@@ -85,9 +85,9 @@ describe('06-loader-chaining', (c) => {
             'main2.js',
             '../05-loader-transforming-ts/loader.js',
             '../04-loader-reading-http/loader.js',
-            '../03-loader-resolving-overrides/loader.js'
+            '../03-loader-resolving-overrides/loader.js',
           ),
-        /SyntaxError.*Missing initializer/
+        /SyntaxError.*Missing initializer/,
       )
     })
   })

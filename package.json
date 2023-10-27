@@ -26,14 +26,14 @@
   },
   "homepage": "https://github.com/giltayar/esm-loaders-talk#readme",
   "devDependencies": {
-    "@types/node": "^20.3.2",
-    "concurrently": "^8.2.0",
-    "esbuild": "^0.18.10",
-    "eslint": "^8.43.0",
-    "execa": "^7.1.1",
-    "p-retry": "^5.1.2",
-    "prettier": "^2.8.8",
-    "serve": "^14.2.0"
+    "@types/node": "^20.8.9",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.19.5",
+    "eslint": "^8.52.0",
+    "execa": "^8.0.1",
+    "p-retry": "^6.1.0",
+    "prettier": "^3.0.3",
+    "serve": "^14.2.1"
   },
   "dependencies": {
     "right-pad": "^1.0.1"

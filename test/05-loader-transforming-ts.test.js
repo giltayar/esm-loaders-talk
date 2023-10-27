@@ -12,7 +12,7 @@ describe('05-loader-transforming-ts', (c) => {
   it('should not load transform ts if no loader', async () => {
     await assert.rejects(
       () => runInNode('main.ts'),
-      /ERR_UNKNOWN_FILE_EXTENSION/
+      /ERR_UNKNOWN_FILE_EXTENSION/,
     )
   })
 })
